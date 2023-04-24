@@ -14,14 +14,14 @@
     <main>
       <div class="left_bx1">
         <div class="content">
-          <form method="post" id="login-form">
+          <div id="login-form">
             <h3>Login</h3>
             <div class="card">
-              <label for="name">Name</label>
+              <label for="email">Email</label>
               <input
-                type="text"
-                name="user_name"
-                placeholder="Enter Your Username..."
+                type="email"
+                id="user_email"
+                placeholder="Enter Your Email..."
                 required
               />
             </div>
@@ -29,24 +29,94 @@
               <label for="password">Password</label>
               <input
                 type="password"
-                name="user_password"
+                id="user_password"
                 placeholder="Enter Your Password..."
                 required
               />
             </div>
-            <input type="submit" value="Login" class="submit" id="login-form-submit"/>
-            <!-- <div class="check">
-                        <input type="checkbox" name="" id=""><span>Remember Me</span>
-                    </div> -->
+            <input
+              type="submit"
+              value="Login"
+              class="submit"
+              id="login_form_submit"
+            />
             <p>Don't have a account yet? <a href="signup.html">Sign Up</a></p>
-          </form>
+          </div>
         </div>
       </div>
       <div class="right_bx1">
         <img src="img/1.jpg" alt="" />
-        <h3 id="incorrect_h3">Incorrect Password or Login</h3>
+        <h3 id="incorrect_h3">Incorrect Password or Email</h3>
       </div>
     </main>
-    <script src="login.js"></script>
+    <!-- <script src="login.js"></script> -->
   </body>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+    } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-auth.js";
+    import {
+      getDatabase,
+      ref,
+      update,
+    } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYsFsyShXX71DH9lzapvBEpYWrHDj5ROs",
+      authDomain: "myclonespotify.firebaseapp.com",
+      databaseURL: "https://myclonespotify-default-rtdb.firebaseio.com",
+      projectId: "myclonespotify",
+      storageBucket: "myclonespotify.appspot.com",
+      messagingSenderId: "726811738074",
+      appId: "1:726811738074:web:96def61422dea10e7b8ae3",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    console.log(app);
+    const auth = getAuth(app);
+    console.log(auth);
+    const database = getDatabase(app);
+    console.log(database);
+
+    const but = document.getElementById("login_form_submit");
+
+    but.addEventListener("click", (e) => {
+      let email = document.getElementById("user_email").value;
+      let password = document.getElementById("user_password").value;
+      const loginErrorMsg = document.getElementById("incorrect_h3");
+
+      console.log(email, password);
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+
+          const dt = new Date();
+          update(ref(database, "users/" + user.uid), {
+            last_login: dt,
+          });
+
+          alert("User loged in!");
+
+          setTimeout(function () {
+            window.location.href = "index.html";
+          }, 2 * 1000);
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          alert(errorMessage);
+          loginErrorMsg.style.visibility = "visible";
+        });
+    });
+  </script>
 </html>
