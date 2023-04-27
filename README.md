@@ -14,3 +14,15 @@ Functionality:
 8. U can pause songs
 
 deploy: https://vvkhil.github.io/
+
+Signup:
+
+![image](https://user-images.githubusercontent.com/100804312/234995835-d509379a-fc8c-440b-86f3-51dc6db243a1.png)
+
+Login:
+
+![image](https://user-images.githubusercontent.com/100804312/234996437-a4adb1bf-63a3-48e0-830d-e318ab25d30b.png)
+
+MainProject:
+
+![image](https://user-images.githubusercontent.com/100804312/234996494-a3485fed-b3fe-4531-b25c-849ae5683ffc.png)
