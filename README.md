@@ -12,3 +12,5 @@ Functionality:
 6. U can rewind the song
 7. U can change the volume of the song
 8. U can pause songs
+
+deploy: https://vvkhil.github.io/
